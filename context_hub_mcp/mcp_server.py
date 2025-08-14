@@ -31,7 +31,29 @@ import httpx
 from typing import Any
 
 # FastAPI server configuration
-FASTAPI_BASE_URL = os.getenv("FASTAPI_BASE_URL", "http://localhost:8000")
+def _resolve_fastapi_base_url() -> str:
+    """ENV 우선 → profile이 local/dev면 localhost → 기본값(사내 게이트웨이) 순서로 결정"""
+    env_url = os.getenv("FASTAPI_BASE_URL")
+    if env_url:
+        return env_url
+
+    profile = (
+        os.getenv("PROFILE")
+        or os.getenv("APP_PROFILE")
+        or os.getenv("APP_ENV")
+        or os.getenv("ENVIRONMENT")
+        or os.getenv("ENV")
+        or os.getenv("PYTHON_ENV")
+        or ""
+    ).lower()
+
+    if profile in {"local"}:
+        return "http://localhost:8000"
+
+    # 기본 게이트웨이 주소
+    return "http://172.10.60.87:30513"
+
+FASTAPI_BASE_URL = _resolve_fastapi_base_url()
 
 # Timeout constants for different operations
 SEARCH_TIMEOUT = 2.0  # Fast search operations
