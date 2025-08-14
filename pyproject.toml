@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling>=1.25.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "context-hub-mcp"
+version = "1.0.0"
+description = "Context Hub MCP server (STDIO) for use with AI agents via uvx"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+  { name = "Context Hub", email = "noreply@example.com" }
+]
+dependencies = [
+  "fastmcp>=0.2.0",
+  "httpx>=0.24.0",
+  "python-dotenv>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://example.com"
+
+[project.scripts]
+context-hub-mcp = "context_hub_mcp.mcp_server:main"
+
+

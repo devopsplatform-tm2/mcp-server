@@ -18,8 +18,12 @@ sys.path.insert(0, str(backend_dir))
 
 # Load environment variables from .env file
 from dotenv import load_dotenv
-env_path = backend_dir / '.env'
-load_dotenv(env_path)
+# CWD 우선 로드, 필요 시 패키지 디렉토리의 .env로 폴백
+load_dotenv()
+if not os.getenv("FASTAPI_BASE_URL"):
+    fallback_env = backend_dir / '.env'
+    if fallback_env.exists():
+        load_dotenv(fallback_env)
 
 from fastmcp import FastMCP
 import time
@@ -397,10 +401,10 @@ async def update_context_hub(
                     "success": False,
                     "operation": None,
                     "context": None,
-                "response_time_ms": response_time_ms,
+                    "response_time_ms": response_time_ms,
                     "error": f"API error {response.status_code}: {error_detail}",
                     "message": f"컨텍스트 수정 중 오류가 발생했습니다: {error_detail}"
-            }
+                }
     
     except httpx.TimeoutException:
         return create_error_response(start_time, None, "timeout", "요청 시간이 초과되었습니다", 
@@ -661,5 +665,10 @@ async def search_context_id(
         return create_error_response(start_time, None, "search_failed", f"Search API call failed: {str(e)}",
                                    results=[], total_count=0, query=query, error_message=str(e))
 
-if __name__ == "__main__":
+def main() -> None:
     mcp.run()
+
+if __name__ == "__main__":
+    main()
+
+
