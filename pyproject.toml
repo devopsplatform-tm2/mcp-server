@@ -15,7 +15,6 @@ authors = [
 dependencies = [
   "fastmcp>=0.2.0",
   "httpx>=0.24.0",
-  "python-dotenv>=1.0.0",
 ]
 
 [project.urls]

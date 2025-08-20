@@ -16,14 +16,7 @@ from pathlib import Path
 backend_dir = Path(__file__).parent.resolve()
 sys.path.insert(0, str(backend_dir))
 
-# Load environment variables from .env file
-from dotenv import load_dotenv
-# CWD 우선 로드, 필요 시 패키지 디렉토리의 .env로 폴백
-load_dotenv()
-if not os.getenv("FASTAPI_BASE_URL"):
-    fallback_env = backend_dir / '.env'
-    if fallback_env.exists():
-        load_dotenv(fallback_env)
+# Environment variables are optional - defaults are used if not set
 
 from fastmcp import FastMCP
 import time
