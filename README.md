@@ -5,13 +5,13 @@ Context Hub용 MCP 서버(STDIO). 다른 AI 에이전트가 STDIO 방식으로 �
 ## 실행 (uvx 원격 실행)
 
 ```bash
-uvx --from git+https://github.com/chanwoong114/mcp-server.git@master context-hub-mcp
+uvx --from git+https://github.com/devopsplatform-tm2/mcp-server.git@master context-hub-mcp
 ```
 
 백엔드 FastAPI 주소 지정:
 
 ```bash
-FASTAPI_BASE_URL=https://your-fastapi.example.com uvx --from git+https://github.com/chanwoong114/mcp-server.git@master context-hub-mcp
+uvx --from git+https://github.com/devopsplatform-tm2/mcp-server.git@master context-hub-mcp
 ```
 
 ## 로컬 실행
